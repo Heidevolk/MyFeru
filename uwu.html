@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hacia las estrellas</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #000000, #050517, #0b0b2e);
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .content {
+            z-index: 10;
+            text-align: center;
+        }
+        h1, p {
+            margin: 0;
+        }
+        button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1em;
+            color: white;
+            background: #ff6b81;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="content" id="content">
+        <h1>Continuemos este camino estrellado a la luz de la felicidad 🩷💫</h1>
+        <p>["Deseo que este camino que estamos a punto de Iniciar sea uno de los mejores y mas prosperos que podamos realizar🩷"]</p>
+        
+        <button onclick="launchStars()">Hold My Hand</button>
+    </div>
+    <canvas id="stars"></canvas>
+
+    <script>
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = Array(200).fill().map(() => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: Math.random() * 1 + 0.5,
+        }));
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                star.y -= star.speed;
+                if (star.y < 0) star.y = canvas.height;
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        function launchStars() {
+            // Acelerar estrellas
+            stars.forEach(star => {
+                star.speed *= 4;
+            });
+            // Esconder el mensaje y el botón
+            document.getElementById('content').classList.add('hidden');
+        }
+
+        drawStars();
+    </script>
+</body>
+</html>
